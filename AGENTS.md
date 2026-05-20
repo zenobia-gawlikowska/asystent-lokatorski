@@ -30,4 +30,6 @@ TypeScript strict mode via `astro/tsconfigs/strict` (`@tsconfig.json`). Index ac
 
 ## CI and deployment
 
-CI gate: `npx astro sync` → `npm run lint` → `npm run build` (`@.github/workflows/ci.yml`). Warning: the workflow triggers on `master`; the default branch is `main` — PRs to `main` currently bypass CI until the trigger branch is corrected. Deploy target: Cloudflare Pages via `@wrangler.jsonc`. Note: the `name` field in `wrangler.jsonc` still reads `"10x-astro-starter"` — update it to `"asystent-lokatorski"` before the first production deploy.
+CI gate: `npx astro sync` → `npm run lint` → `npm run build` (`@.github/workflows/ci.yml`). Merges to `main` auto-deploy via GitHub integration in the Cloudflare dashboard.
+
+Deploy target: **Cloudflare Worker** (not Pages) — `@astrojs/cloudflare` v13+ generates Worker output (`dist/server/entry.mjs`), not the `_worker.js` format used by Pages. The Cloudflare build pipeline runs `wrangler deploy` which picks up `dist/server/wrangler.json` (generated at build time) and wires the ASSETS, SESSION, and IMAGES bindings automatically. Do not run `wrangler pages deploy` — it uploads static files only and leaves the SSR worker unwired.
