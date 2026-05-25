@@ -1,0 +1,255 @@
+import { useEffect, useState } from "react";
+
+import { UI } from "@/data/ui";
+import { tree } from "@/data/tree";
+import { LANG_LABELS, LANGS, type Lang, type LocalizedString } from "@/data/types";
+import { cn } from "@/lib/utils";
+
+// KOPL contact page — update when the organization provides a direct link
+const KOPL_CONTACT_URL = "https://lokatorzy.info.pl";
+
+const STEP_COUNT = 3;
+
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+type Step =
+  | { id: "city" }
+  | { id: "caseType"; cityId: string }
+  | { id: "stage"; cityId: string; caseTypeId: string }
+  | { id: "result"; cityId: string; caseTypeId: string; stageId: string };
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+const t = (s: LocalizedString, lang: Lang) => s[lang];
+
+function stepNumber(step: Step): number | null {
+  if (step.id === "city") return 1;
+  if (step.id === "caseType") return 2;
+  if (step.id === "stage") return 3;
+  return null;
+}
+
+// ─── Sub-components ─────────────────────────────────────────────────────────
+
+function LanguageSwitcher({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
+  return (
+    <div className="flex flex-wrap justify-center gap-1">
+      {LANGS.map((l) => (
+        <button
+          key={l}
+          onClick={() => onChange(l)}
+          aria-pressed={l === lang}
+          className={cn(
+            "rounded-md border px-2 py-1 text-xs transition-colors",
+            l === lang
+              ? "border-gray-900 bg-gray-900 text-white"
+              : "border-gray-300 bg-white text-gray-600 hover:border-gray-500",
+          )}
+        >
+          {LANG_LABELS[l]}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function Tile({
+  label,
+  description,
+  onClick,
+}: {
+  label: string;
+  description?: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-900 hover:shadow-sm active:scale-[0.98]"
+    >
+      <span className="block text-base font-semibold text-gray-900">{label}</span>
+      {description && (
+        <span className="mt-1 block text-sm leading-relaxed text-gray-500">{description}</span>
+      )}
+    </button>
+  );
+}
+
+// ─── Wizard ─────────────────────────────────────────────────────────────────
+
+export function Wizard() {
+  const [lang, setLang] = useState<Lang>("pl");
+  const [history, setHistory] = useState<Step[]>([{ id: "city" }]);
+
+  const step = history[history.length - 1]!;
+
+  // Persist language selection
+  useEffect(() => {
+    const saved = localStorage.getItem("kopl-lang");
+    if (saved && LANGS.includes(saved as Lang)) setLang(saved as Lang);
+  }, []);
+
+  const changeLang = (l: Lang) => {
+    setLang(l);
+    localStorage.setItem("kopl-lang", l);
+  };
+
+  const go = (next: Step) => setHistory((h) => [...h, next]);
+  const back = () => setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
+  const reset = () => setHistory([{ id: "city" }]);
+
+  // Derive current objects from tree
+  const city = step.id !== "city" ? tree.find((c) => c.id === step.cityId) : undefined;
+
+  const caseType =
+    (step.id === "stage" || step.id === "result") && city
+      ? city.caseTypes.find((ct) => ct.id === step.caseTypeId)
+      : undefined;
+
+  const stage =
+    step.id === "result" && caseType
+      ? caseType.stages.find((s) => s.id === step.stageId)
+      : undefined;
+
+  const stepNum = stepNumber(step);
+
+  return (
+    <div className="flex min-h-screen flex-col bg-gray-50">
+      {/* Header */}
+      <header className="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
+        <div className="mx-auto max-w-lg space-y-2">
+          <div className="flex items-center justify-between">
+            <h1 className="text-sm font-semibold text-gray-900">Asystent Lokatorski</h1>
+            {history.length > 1 && (
+              <button
+                onClick={back}
+                className="text-sm text-gray-500 transition-colors hover:text-gray-900"
+              >
+                ← {t(UI.back, lang)}
+              </button>
+            )}
+          </div>
+          <LanguageSwitcher lang={lang} onChange={changeLang} />
+          {stepNum !== null && (
+            <div
+              role="progressbar"
+              aria-valuenow={stepNum}
+              aria-valuemin={1}
+              aria-valuemax={STEP_COUNT}
+              className="h-1 w-full overflow-hidden rounded-full bg-gray-100"
+            >
+              <div
+                className="h-full rounded-full bg-gray-900 transition-all duration-300"
+                style={{ width: `${(stepNum / STEP_COUNT) * 100}%` }}
+              />
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="flex-1 px-4 py-6">
+        <div className="mx-auto max-w-lg space-y-4">
+          {/* Step 1 — City */}
+          {step.id === "city" && (
+            <>
+              <h2 className="text-xl font-bold text-gray-900">{t(UI.selectCity, lang)}</h2>
+              <div className="space-y-3">
+                {tree.map((c) => (
+                  <Tile key={c.id} label={c.name} onClick={() => go({ id: "caseType", cityId: c.id })} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Step 2 — Case type */}
+          {step.id === "caseType" && city && (
+            <>
+              <h2 className="text-xl font-bold text-gray-900">{t(UI.selectCaseType, lang)}</h2>
+              <div className="space-y-3">
+                {city.caseTypes.map((ct) => (
+                  <Tile
+                    key={ct.id}
+                    label={t(ct.label, lang)}
+                    description={t(ct.description, lang)}
+                    onClick={() => go({ id: "stage", cityId: step.cityId, caseTypeId: ct.id })}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Step 3 — Stage */}
+          {step.id === "stage" && caseType && (
+            <>
+              <h2 className="text-xl font-bold text-gray-900">{t(UI.selectStage, lang)}</h2>
+              <div className="space-y-3">
+                {caseType.stages.map((s) => (
+                  <Tile
+                    key={s.id}
+                    label={t(s.label, lang)}
+                    onClick={() =>
+                      go({
+                        id: "result",
+                        cityId: step.cityId,
+                        caseTypeId: step.caseTypeId,
+                        stageId: s.id,
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Result */}
+          {step.id === "result" && stage && (
+            <>
+              <h2 className="text-xl font-bold text-gray-900">{t(UI.yourDocument, lang)}</h2>
+              <div className="space-y-4">
+                {stage.documents.map((doc) => (
+                  <div key={doc.id} className="space-y-3 rounded-xl border border-gray-200 bg-white p-5">
+                    <p className="font-semibold text-gray-900">{t(doc.name, lang)}</p>
+                    {doc.note && (
+                      <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
+                        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-amber-800">
+                          {t(UI.documentNote, lang)}
+                        </p>
+                        <p className="text-sm text-amber-900">{t(doc.note, lang)}</p>
+                      </div>
+                    )}
+                    <a
+                      href={doc.filename}
+                      download
+                      className="flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-700"
+                    >
+                      {t(UI.download, lang)}
+                    </a>
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={reset}
+                className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+              >
+                {t(UI.startOver, lang)}
+              </button>
+            </>
+          )}
+
+          {/* Contact staff escape — FR-002, always visible */}
+          <div className="border-t border-gray-100 pt-4 text-center">
+            <a
+              href={KOPL_CONTACT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900"
+            >
+              {t(UI.contactStaff, lang)}
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
