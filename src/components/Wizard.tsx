@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { UI } from "@/data/ui";
 import { tree } from "@/data/tree";
@@ -123,6 +123,15 @@ export function Wizard() {
   const stage = step.id === "result" && caseType ? caseType.stages.find((s) => s.id === step.stageId) : undefined;
 
   const stepNum = stepNumber(step);
+
+  // Dev-only a11y checker — tree-shaken by Vite in production builds
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      void Promise.all([import("@axe-core/react"), import("react-dom")]).then(([{ default: axe }, ReactDOM]) => {
+        void axe(React, ReactDOM, 1000);
+      });
+    }
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
