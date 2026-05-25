@@ -73,4 +73,12 @@ export const UI: Record<string, LocalizedString> = {
     es: "Nota",
     fr: "Note",
   },
+  progressLabel: {
+    pl: "Postęp",
+    ua: "Прогрес",
+    ru: "Прогресс",
+    en: "Progress",
+    es: "Progreso",
+    fr: "Progression",
+  },
 };

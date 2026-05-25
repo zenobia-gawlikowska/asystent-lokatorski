@@ -10,6 +10,16 @@ const KOPL_CONTACT_URL = "https://lokatorzy.info.pl";
 
 const STEP_COUNT = 3;
 
+// BCP-47 lang codes for html[lang] — "ua" is our internal id, "uk" is the standard code for Ukrainian
+const LANG_TO_BCP47: Record<Lang, string> = {
+  pl: "pl",
+  ua: "uk",
+  ru: "ru",
+  en: "en",
+  es: "es",
+  fr: "fr",
+};
+
 // ─── Types ──────────────────────────────────────────────────────────────────
 
 type Step =
@@ -79,13 +89,17 @@ export function Wizard() {
   // Persist language selection — must use useEffect to avoid SSR/hydration mismatch
   useEffect(() => {
     const saved = localStorage.getItem("kopl-lang");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (saved && LANGS.includes(saved as Lang)) setLang(saved as Lang);
+    if (saved && LANGS.includes(saved as Lang)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLang(saved as Lang);
+      document.documentElement.lang = LANG_TO_BCP47[saved as Lang];
+    }
   }, []);
 
   const changeLang = (l: Lang) => {
     setLang(l);
     localStorage.setItem("kopl-lang", l);
+    document.documentElement.lang = LANG_TO_BCP47[l];
   };
 
   const go = (next: Step) => {
@@ -133,6 +147,7 @@ export function Wizard() {
               aria-valuenow={stepNum}
               aria-valuemin={1}
               aria-valuemax={STEP_COUNT}
+              aria-label={t(UI.progressLabel, lang)}
               className="h-1 w-full overflow-hidden rounded-full bg-gray-100"
             >
               <div
