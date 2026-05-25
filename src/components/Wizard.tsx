@@ -42,7 +42,7 @@ function LanguageSwitcher({ lang, onChange }: { lang: Lang; onChange: (l: Lang) 
           }}
           aria-pressed={l === lang}
           className={cn(
-            "inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md border px-3 py-2 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none",
+            "inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md border px-3 py-2 text-xs transition-colors focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none",
             l === lang
               ? "border-gray-900 bg-gray-900 text-white"
               : "border-gray-300 bg-white text-gray-600 hover:border-gray-500",
@@ -59,7 +59,7 @@ function Tile({ label, description, onClick }: { label: string; description?: st
   return (
     <button
       onClick={onClick}
-      className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-900 hover:shadow-sm active:scale-[0.98]"
+      className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-900 hover:shadow-sm focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
     >
       <span className="block text-base font-semibold text-gray-900">{label}</span>
       {description && <span className="mt-1 block text-sm leading-relaxed text-gray-700">{description}</span>}
@@ -120,7 +120,7 @@ export function Wizard() {
             {history.length > 1 && (
               <button
                 onClick={back}
-                className="-my-2 inline-flex min-h-[44px] items-center rounded-md px-2 py-2 text-sm text-gray-500 transition-colors hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
+                className="-my-2 inline-flex min-h-[44px] items-center rounded-md px-2 py-2 text-sm text-gray-500 transition-colors hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 ← {t(UI.back, lang)}
               </button>
@@ -226,7 +226,7 @@ export function Wizard() {
                     <a
                       href={doc.filename}
                       download
-                      className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 focus-visible:outline-none"
+                      className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-700 focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 focus-visible:outline-none"
                     >
                       {t(UI.download, lang)}
                     </a>
@@ -235,7 +235,7 @@ export function Wizard() {
               </div>
               <button
                 onClick={reset}
-                className="mt-2 min-h-[44px] w-full rounded-lg border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
+                className="mt-2 min-h-[44px] w-full rounded-lg border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 {t(UI.startOver, lang)}
               </button>
@@ -248,7 +248,7 @@ export function Wizard() {
               href={KOPL_CONTACT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="-mx-2 inline-flex min-h-[44px] items-center rounded-md px-2 py-2 text-sm text-gray-700 underline underline-offset-4 transition-colors hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
+              className="-mx-2 inline-flex min-h-[44px] items-center rounded-md px-2 py-2 text-sm text-gray-700 underline underline-offset-4 transition-colors hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               {t(UI.contactStaff, lang)}
             </a>
