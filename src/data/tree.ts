@@ -41,6 +41,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "sprzeciw-wypowiedzenie",
+                documentType: "letter",
                 name: {
                   pl: "Sprzeciw od wypowiedzenia umowy najmu",
                   ua: "Заперечення на розірвання договору оренди",
@@ -112,6 +113,7 @@ export const tree: DecisionTree = [
                     documents: [
                       {
                         id: "wezwanie-przywrocenie-mediow-sub",
+                        documentType: "letter",
                         name: {
                           pl: "Wezwanie do przywrócenia mediów / dostępu do lokalu",
                           ua: "Вимога про відновлення комунальних послуг / доступу до житла",
@@ -140,6 +142,7 @@ export const tree: DecisionTree = [
                       },
                       {
                         id: "nekanie-odciecie-mediow-sub",
+                        documentType: "police",
                         name: {
                           pl: "Zawiadomienie o nękaniu przez odcięcie mediów",
                           ua: "Повідомлення про переслідування шляхом відключення комунальних послуг",
@@ -181,6 +184,7 @@ export const tree: DecisionTree = [
                     documents: [
                       {
                         id: "naruszenie-posiadania-sub",
+                        documentType: "court",
                         name: {
                           pl: "Wniosek o ochronę naruszonego posiadania",
                           ua: "Заява про захист порушеного права власності",
@@ -222,6 +226,7 @@ export const tree: DecisionTree = [
                     documents: [
                       {
                         id: "zazalenie-umorzenie-sub",
+                        documentType: "police",
                         name: {
                           pl: "Zażalenie na postanowienie o umorzeniu postępowania",
                           ua: "Скарга на постанову про закриття провадження",
@@ -276,6 +281,7 @@ export const tree: DecisionTree = [
                     documents: [
                       {
                         id: "odpowiedz-pozew-eksmisja",
+                        documentType: "court",
                         name: {
                           pl: "Odpowiedź na pozew o eksmisję",
                           ua: "Відповідь на позов про виселення",
@@ -334,6 +340,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "sprzeciw-podwyzka",
+                documentType: "letter",
                 name: {
                   pl: "Sprzeciw od podwyżki czynszu",
                   ua: "Заперечення на підвищення орендної плати",
@@ -375,6 +382,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "wezwanie-uzasadnienie",
+                documentType: "letter",
                 name: {
                   pl: "Wezwanie do dostarczenia pisemnego uzasadnienia podwyżki",
                   ua: "Вимога про надання письмового обґрунтування підвищення",
@@ -459,6 +467,7 @@ export const tree: DecisionTree = [
                     documents: [
                       {
                         id: "oswiadczenie-obnizka",
+                        documentType: "letter",
                         name: {
                           pl: "Oświadczenie o obniżeniu czynszu",
                           ua: "Заява про зниження орендної плати",
@@ -521,6 +530,7 @@ export const tree: DecisionTree = [
                     documents: [
                       {
                         id: "wezwanie-obnizenie-prywatny",
+                        documentType: "letter",
                         name: {
                           pl: "Wezwanie do obniżenia czynszu (lokal prywatny)",
                           ua: "Вимога про зниження орендної плати (приватне житло)",
@@ -587,6 +597,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "wezwanie-przywrocenie-mediow",
+                documentType: "letter",
                 name: {
                   pl: "Wezwanie do przywrócenia mediów / dostępu do lokalu",
                   ua: "Вимога про відновлення комунальних послуг / доступу до житла",
@@ -615,6 +626,7 @@ export const tree: DecisionTree = [
               },
               {
                 id: "nekanie-odciecie-mediow",
+                documentType: "police",
                 name: {
                   pl: "Zawiadomienie o nękaniu przez odcięcie mediów",
                   ua: "Повідомлення про переслідування шляхом відключення комунальних послуг",
@@ -656,6 +668,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "naruszenie-posiadania",
+                documentType: "court",
                 name: {
                   pl: "Wniosek o ochronę naruszonego posiadania",
                   ua: "Заява про захист порушеного права власності",
@@ -697,6 +710,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "zazalenie-umorzenie",
+                documentType: "police",
                 name: {
                   pl: "Zażalenie na postanowienie o umorzeniu postępowania",
                   ua: "Скарга на постанову про закриття провадження",
@@ -751,6 +765,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "skarga-uchwaly-doc",
+                documentType: "court",
                 name: {
                   pl: "Skarga na uchwałę Rady Miasta",
                   ua: "Скарга на рішення міської ради",
@@ -784,6 +799,7 @@ export const tree: DecisionTree = [
             documents: [
               {
                 id: "pozew-art691",
+                documentType: "court",
                 name: {
                   pl: "Pozew o ustalenie prawa do lokalu (art. 691 KC)",
                   ua: "Позов про встановлення права на житло (ст. 691 ЦК)",

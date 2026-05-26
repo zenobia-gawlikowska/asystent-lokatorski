@@ -1,9 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { FileText, Scale, ShieldAlert } from "lucide-react";
 
 import { UI } from "@/data/ui";
 import { tree } from "@/data/tree";
-import { LANG_LABELS, LANGS, type Lang, type LocalizedString } from "@/data/types";
+import { LANG_LABELS, LANGS, type DocumentType, type Lang, type LocalizedString } from "@/data/types";
 import { cn } from "@/lib/utils";
+
+// ─── Document-type badge ─────────────────────────────────────────────────────
+
+// Resolved at module init time, after UI is imported — no dynamic key lookup needed
+interface DocTypeCfg {
+  icon: React.ElementType;
+  bg: string;
+  label: LocalizedString;
+}
+const DOC_TYPE_CONFIG: Record<DocumentType, DocTypeCfg> = {
+  letter: { icon: FileText, bg: "bg-slate-100 text-slate-700", label: UI.docTypeLetter },
+  court: { icon: Scale, bg: "bg-blue-50 text-blue-700", label: UI.docTypeCourt },
+  police: { icon: ShieldAlert, bg: "bg-amber-50 text-amber-700", label: UI.docTypePolice },
+};
+
+function DocTypeBadge({ type, lang }: { type: DocumentType; lang: Lang }) {
+  const cfg = DOC_TYPE_CONFIG[type];
+  const Icon = cfg.icon;
+  return (
+    <span className={cn("inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium", cfg.bg)}>
+      <Icon size={13} aria-hidden="true" />
+      {t(cfg.label, lang)}
+    </span>
+  );
+}
 
 // KOPL contact page — update when the organization provides a direct link
 const KOPL_CONTACT_URL = "https://lokatorzy.info.pl/kontakt/";
@@ -306,6 +332,7 @@ export function Wizard() {
               <div className="space-y-4">
                 {(resultStage.documents ?? []).map((doc) => (
                   <div key={doc.id} className="space-y-3 rounded-xl border border-gray-200 bg-white p-5">
+                    <DocTypeBadge type={doc.documentType} lang={lang} />
                     <p className="font-semibold text-gray-900">{t(doc.name, lang)}</p>
                     {doc.description && (
                       <p className="text-sm leading-relaxed text-gray-600">{t(doc.description, lang)}</p>

@@ -15,8 +15,15 @@ export const LANG_LABELS: Record<Lang, string> = {
 // Documents themselves are always in Polish.
 export type LocalizedString = Record<Lang, string>;
 
+// Identifies who the document is addressed to, driving the icon badge in the result card
+export type DocumentType =
+  | "letter" // pismo do właściciela / zarządcy
+  | "court" // wniosek / pozew / skarga do sądu
+  | "police"; // doniesienie / zawiadomienie do organów ścigania
+
 export interface Document {
   id: string;
+  documentType: DocumentType;
   // Display name shown to tenant in their language
   name: LocalizedString;
   // Path under /public/documents/, always a Polish-language file

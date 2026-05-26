@@ -89,4 +89,28 @@ export const UI: Record<string, LocalizedString> = {
     es: "Progreso",
     fr: "Progression",
   },
+  docTypeLetter: {
+    pl: "Pismo do właściciela",
+    ua: "Лист до власника",
+    ru: "Письмо владельцу",
+    en: "Letter to landlord",
+    es: "Carta al arrendador",
+    fr: "Courrier au propriétaire",
+  },
+  docTypeCourt: {
+    pl: "Wniosek do sądu",
+    ua: "Заява до суду",
+    ru: "Заявление в суд",
+    en: "Court application",
+    es: "Escrito judicial",
+    fr: "Requête judiciaire",
+  },
+  docTypePolice: {
+    pl: "Doniesienie do organów ścigania",
+    ua: "Повідомлення до правоохоронних органів",
+    ru: "Сообщение в правоохранительные органы",
+    en: "Report to law enforcement",
+    es: "Denuncia ante las fuerzas del orden",
+    fr: "Signalement aux forces de l'ordre",
+  },
 };
