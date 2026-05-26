@@ -239,6 +239,118 @@ export const tree: DecisionTree = [
         ],
       },
       {
+        id: "dzika-eksmisja",
+        label: {
+          pl: "Dzika eksmisja (bezprawne działania właściciela)",
+          ua: "Незаконне виселення (протиправні дії власника)",
+          ru: "Незаконное выселение (противоправные действия владельца)",
+          en: "Illegal eviction (unlawful landlord actions)",
+          es: "Desalojo ilegal (acciones ilegales del arrendador)",
+          fr: "Expulsion illégale (actions illicites du propriétaire)",
+        },
+        description: {
+          pl: "Właściciel stosuje bezprawne metody nacisku — odcina media, nachodzi mnie w lokalu lub grozi, żebym się wyprowadził/a.",
+          ua: "Власник застосовує незаконні методи тиску — відключає комунальні послуги, вривається до квартири або погрожує, щоб я виїхав/ла.",
+          ru: "Владелец применяет незаконные методы давления — отключает коммунальные услуги, вторгается в жильё или угрожает, чтобы я съехал/а.",
+          en: "The landlord is using unlawful pressure tactics — cutting utilities, entering my home without permission, or threatening me to leave.",
+          es: "El arrendador utiliza métodos de presión ilegales: corta los suministros, irrumpe en el piso o me amenaza para que me vaya.",
+          fr: "Le propriétaire recourt à des méthodes de pression illégales : couper les services, pénétrer dans le logement sans permission ou me menacer pour que je parte.",
+        },
+        stages: [
+          {
+            id: "bezprawne-odciecie-mediow",
+            label: {
+              pl: "Właściciel odciął media (prąd, wodę, ogrzewanie)",
+              ua: "Власник відключив комунальні послуги (електрику, воду, опалення)",
+              ru: "Владелец отключил коммунальные услуги (электричество, воду, отопление)",
+              en: "Landlord cut off utilities (electricity, water, heating)",
+              es: "El arrendador cortó los suministros (electricidad, agua, calefacción)",
+              fr: "Le propriétaire a coupé les services (électricité, eau, chauffage)",
+            },
+            documents: [
+              {
+                id: "nekanie-odciecie-mediow",
+                name: {
+                  pl: "Zawiadomienie o nękaniu przez odcięcie mediów",
+                  ua: "Повідомлення про переслідування шляхом відключення комунальних послуг",
+                  ru: "Уведомление о притеснении путём отключения коммунальных услуг",
+                  en: "Notice of harassment by utility cutoff",
+                  es: "Notificación de acoso mediante corte de suministros",
+                  fr: "Signalement de harcèlement par coupure des services",
+                },
+                filename: "/documents/warszawa/nekanie-odciecie-mediow.pdf",
+                note: {
+                  pl: "Odcięcie mediów może być przestępstwem nękania (art. 190a kk). Zgłoś sprawę równolegle na Policję.",
+                  ua: "Відключення комунальних послуг може бути злочином переслідування (ст. 190a КК). Повідомте Поліцію одночасно.",
+                  ru: "Отключение коммунальных услуг может являться преступлением преследования (ст. 190a УК). Сообщите в Полицию одновременно.",
+                  en: "Cutting utilities may constitute criminal harassment (Art. 190a Penal Code). Report to the Police at the same time.",
+                  es: "El corte de suministros puede constituir acoso criminal (art. 190a del Código Penal). Denuncie a la Policía al mismo tiempo.",
+                  fr: "La coupure des services peut constituer un harcèlement criminel (art. 190a du Code pénal). Signalez-le simultanément à la Police.",
+                },
+              },
+            ],
+          },
+          {
+            id: "najscie-w-lokalu",
+            label: {
+              pl: "Właściciel wchodzi do mieszkania bez mojej zgody",
+              ua: "Власник входить до квартири без мого дозволу",
+              ru: "Владелец входит в жильё без моего согласия",
+              en: "Landlord enters my home without my consent",
+              es: "El arrendador entra al piso sin mi consentimiento",
+              fr: "Le propriétaire entre dans mon logement sans mon accord",
+            },
+            documents: [
+              {
+                id: "naruszenie-posiadania",
+                name: {
+                  pl: "Wniosek o ochronę naruszonego posiadania",
+                  ua: "Заява про захист порушеного права власності",
+                  ru: "Заявление о защите нарушенного права владения",
+                  en: "Application for protection of violated possession",
+                  es: "Solicitud de protección de la posesión vulnerada",
+                  fr: "Requête en protection de la possession violée",
+                },
+                filename: "/documents/warszawa/naruszenie-posiadania.pdf",
+                note: {
+                  pl: "Złóż wniosek do sądu rejonowego w ciągu roku od naruszenia posiadania.",
+                  ua: "Подайте заяву до районного суду протягом одного року від порушення права власності.",
+                  ru: "Подайте заявление в районный суд в течение одного года с момента нарушения права владения.",
+                  en: "File the application with the district court within one year of the violation.",
+                  es: "Presente la solicitud ante el juzgado de primera instancia en el plazo de un año desde la vulneración.",
+                  fr: "Déposez la requête au tribunal d'arrondissement dans l'année suivant la violation.",
+                },
+              },
+            ],
+          },
+          {
+            id: "postepowanie-umorzone",
+            label: {
+              pl: "Policja umorzyła postępowanie, chcę się odwołać",
+              ua: "Поліція закрила справу, хочу оскаржити рішення",
+              ru: "Полиция прекратила дело, хочу обжаловать решение",
+              en: "Police closed the case, I want to appeal",
+              es: "La policía archivó el caso, quiero recurrir",
+              fr: "La police a classé l'affaire, je veux faire appel",
+            },
+            documents: [
+              {
+                id: "zazalenie-umorzenie",
+                name: {
+                  pl: "Zażalenie na postanowienie o umorzeniu postępowania",
+                  ua: "Скарга на постанову про закриття провадження",
+                  ru: "Жалоба на постановление о прекращении производства",
+                  en: "Appeal against the decision to discontinue proceedings",
+                  es: "Recurso contra la resolución de archivo de actuaciones",
+                  fr: "Recours contre la décision de classement sans suite",
+                },
+                filename: "/documents/warszawa/zazalenie-umorzenie.pdf",
+              },
+            ],
+          },
+        ],
+      },
+      {
         id: "odciecie-mediow",
         label: {
           pl: "Odcięcie mediów lub utrudnianie dostępu",
