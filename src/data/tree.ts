@@ -351,6 +351,85 @@ export const tree: DecisionTree = [
         ],
       },
       {
+        id: "odmowa-lokalu",
+        label: {
+          pl: "Odmowa przyznania lokalu przez Miasto",
+          ua: "Відмова міста у наданні житла",
+          ru: "Отказ города в предоставлении жилья",
+          en: "City's refusal to grant a flat",
+          es: "Denegación municipal de asignación de vivienda",
+          fr: "Refus de la Ville d'attribuer un logement",
+        },
+        description: {
+          pl: "Miasto odmówiło mi przyznania lub przywrócenia lokalu komunalnego — m.in. po śmierci poprzedniego najemcy lub w związku z uchwałą mieszkaniową.",
+          ua: "Місто відмовило мені у наданні або поновленні комунального житла — зокрема після смерті попереднього орендаря або у зв'язку з житловою ухвалою.",
+          ru: "Город отказал мне в предоставлении или восстановлении муниципального жилья — в том числе после смерти предыдущего нанимателя или в связи с жилищным постановлением.",
+          en: "The City refused to grant or restore a municipal flat — including after the death of the previous tenant or in connection with a housing resolution.",
+          es: "El Ayuntamiento me denegó la concesión o restitución de un piso municipal, incluido el caso de fallecimiento del arrendatario anterior o en relación con una resolución de vivienda.",
+          fr: "La Ville m'a refusé l'attribution ou la restitution d'un logement municipal — notamment après le décès du locataire précédent ou en lien avec une délibération sur le logement.",
+        },
+        stages: [
+          {
+            id: "skarga-uchwaly",
+            label: {
+              pl: "Chcę zaskarżyć uchwałę mieszkaniową Miasta",
+              ua: "Хочу оскаржити житлову ухвалу міста",
+              ru: "Хочу обжаловать жилищное постановление города",
+              en: "I want to challenge the City's housing resolution",
+              es: "Quiero impugnar la resolución de vivienda del Ayuntamiento",
+              fr: "Je veux contester la délibération de la Ville sur le logement",
+            },
+            documents: [
+              {
+                id: "skarga-uchwaly-doc",
+                name: {
+                  pl: "Skarga na uchwałę Rady Miasta",
+                  ua: "Скарга на рішення міської ради",
+                  ru: "Жалоба на решение городского совета",
+                  en: "Complaint against City Council resolution",
+                  es: "Recurso contra la resolución del Pleno Municipal",
+                  fr: "Recours contre la délibération du Conseil municipal",
+                },
+                filename: "/documents/warszawa/skarga-uchwaly.pdf",
+              },
+            ],
+          },
+          {
+            id: "prawo-do-lokalu-po-rodzicach",
+            label: {
+              pl: "Odmówiono mi prawa do lokalu po zmarłych rodzicach",
+              ua: "Мені відмовили у праві на житло після смерті батьків",
+              ru: "Мне отказали в праве на жильё после смерти родителей",
+              en: "I was denied the right to the flat after my parents died",
+              es: "Me denegaron el derecho al piso tras el fallecimiento de mis padres",
+              fr: "On m'a refusé le droit au logement après le décès de mes parents",
+            },
+            documents: [
+              {
+                id: "pozew-art691",
+                name: {
+                  pl: "Pozew o ustalenie prawa do lokalu (art. 691 KC)",
+                  ua: "Позов про встановлення права на житло (ст. 691 ЦК)",
+                  ru: "Иск об установлении права на жильё (ст. 691 ГК)",
+                  en: "Claim to establish right to flat (Art. 691 Civil Code)",
+                  es: "Demanda de reconocimiento del derecho al piso (art. 691 CC)",
+                  fr: "Action en reconnaissance du droit au logement (art. 691 CC)",
+                },
+                filename: "/documents/warszawa/pozew-prawo-do-lokalu-art691.pdf",
+                note: {
+                  pl: "Art. 691 KC daje prawo do wstąpienia w stosunek najmu po śmierci najemcy osobom bliskim stale z nim zamieszkałym.",
+                  ua: "Ст. 691 ЦК надає право на вступ у відносини найму після смерті орендаря близьким особам, які постійно з ним проживали.",
+                  ru: "Ст. 691 ГК предоставляет право на вступление в отношения найма после смерти нанимателя близким лицам, постоянно с ним проживавшим.",
+                  en: "Art. 691 Civil Code grants the right to assume the tenancy after the tenant's death to close family members who lived with them permanently.",
+                  es: "El art. 691 CC otorga el derecho a subrogarse en el contrato de arrendamiento tras la muerte del arrendatario a los familiares cercanos que convivían con él de forma permanente.",
+                  fr: "L'art. 691 CC accorde le droit de se substituer au contrat de bail après le décès du locataire aux proches qui cohabitaient avec lui de manière permanente.",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
         id: "odciecie-mediow",
         label: {
           pl: "Odcięcie mediów lub utrudnianie dostępu",
