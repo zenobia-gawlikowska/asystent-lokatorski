@@ -269,6 +269,26 @@ export const tree: DecisionTree = [
             },
             documents: [
               {
+                id: "wezwanie-przywrocenie-mediow",
+                name: {
+                  pl: "Wezwanie do przywrócenia mediów / dostępu do lokalu",
+                  ua: "Вимога про відновлення комунальних послуг / доступу до житла",
+                  ru: "Требование о восстановлении коммунальных услуг / доступа к жилью",
+                  en: "Demand to restore utilities / access to the flat",
+                  es: "Requerimiento de restablecimiento de suministros / acceso al piso",
+                  fr: "Mise en demeure de rétablir les services / l'accès au logement",
+                },
+                filename: "/documents/warszawa/wezwanie-przywrocenie-mediow.pdf",
+                note: {
+                  pl: "Jednocześnie zgłoś sprawę na Policję i do Prokuratury — odcięcie mediów może być przestępstwem (art. 191 §1a kk).",
+                  ua: "Одночасно зверніться до Поліції та Прокуратури — відключення комунальних послуг може бути злочином (ст. 191 §1a КК).",
+                  ru: "Одновременно обратитесь в Полицию и Прокуратуру — отключение коммунальных услуг может являться преступлением (ст. 191 §1a УК).",
+                  en: "At the same time report to the Police and Prosecutor's Office — cutting utilities may be a criminal offence (Art. 191 §1a of the Penal Code).",
+                  es: "Al mismo tiempo, informe a la Policía y a la Fiscalía — el corte de suministros puede ser un delito (art. 191 §1a del Código Penal).",
+                  fr: "Signalez également à la Police et au Parquet — la coupure des services peut constituer une infraction pénale (art. 191 §1a du Code pénal).",
+                },
+              },
+              {
                 id: "nekanie-odciecie-mediow",
                 name: {
                   pl: "Zawiadomienie o nękaniu przez odcięcie mediów",
@@ -423,60 +443,6 @@ export const tree: DecisionTree = [
                   en: "Art. 691 Civil Code grants the right to assume the tenancy after the tenant's death to close family members who lived with them permanently.",
                   es: "El art. 691 CC otorga el derecho a subrogarse en el contrato de arrendamiento tras la muerte del arrendatario a los familiares cercanos que convivían con él de forma permanente.",
                   fr: "L'art. 691 CC accorde le droit de se substituer au contrat de bail après le décès du locataire aux proches qui cohabitaient avec lui de manière permanente.",
-                },
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: "odciecie-mediow",
-        label: {
-          pl: "Odcięcie mediów lub utrudnianie dostępu",
-          ua: "Відключення комунальних послуг або перешкоди доступу",
-          ru: "Отключение коммунальных услуг или ограничение доступа",
-          en: "Utility cutoff or obstructed access",
-          es: "Corte de suministros o restricción de acceso",
-          fr: "Coupure des services ou obstruction d'accès",
-        },
-        description: {
-          pl: "Właściciel odciął wodę, prąd, ogrzewanie lub uniemożliwia mi wejście do mieszkania.",
-          ua: "Власник відключив воду, електрику, опалення або перешкоджає моєму входу до квартири.",
-          ru: "Владелец отключил воду, электричество, отопление или препятствует моему входу в жильё.",
-          en: "The landlord cut off water, electricity, heating, or is preventing me from entering the flat.",
-          es: "El arrendador cortó el agua, la electricidad, la calefacción o me impide entrar al piso.",
-          fr: "Le propriétaire a coupé l'eau, l'électricité, le chauffage ou m'empêche d'accéder au logement.",
-        },
-        stages: [
-          {
-            id: "media-odciete",
-            label: {
-              pl: "Media zostały odcięte lub dostęp zablokowany",
-              ua: "Комунальні послуги відключено або доступ заблоковано",
-              ru: "Коммунальные услуги отключены или доступ заблокирован",
-              en: "Utilities cut off or access blocked",
-              es: "Suministros cortados o acceso bloqueado",
-              fr: "Services coupés ou accès bloqué",
-            },
-            documents: [
-              {
-                id: "wezwanie-przywrocenie-mediow",
-                name: {
-                  pl: "Wezwanie do przywrócenia mediów / dostępu do lokalu",
-                  ua: "Вимога про відновлення комунальних послуг / доступу до житла",
-                  ru: "Требование о восстановлении коммунальных услуг / доступа к жилью",
-                  en: "Demand to restore utilities / access to the flat",
-                  es: "Requerimiento de restablecimiento de suministros / acceso al piso",
-                  fr: "Mise en demeure de rétablir les services / l'accès au logement",
-                },
-                filename: "/documents/warszawa/wezwanie-przywrocenie-mediow.pdf",
-                note: {
-                  pl: "Jednocześnie zgłoś sprawę na Policję i do Prokuratury — odcięcie mediów może być przestępstwem (art. 191 §1a kk).",
-                  ua: "Одночасно зверніться до Поліції та Прокуратури — відключення комунальних послуг може бути злочином (ст. 191 §1a КК).",
-                  ru: "Одновременно обратитесь в Полицию и Прокуратуру — отключение коммунальных услуг может являться преступлением (ст. 191 §1a УК).",
-                  en: "At the same time report to the Police and Prosecutor's Office — cutting utilities may be a criminal offence (Art. 191 §1a of the Penal Code).",
-                  es: "Al mismo tiempo, informe a la Policía y a la Fiscalía — el corte de suministros puede ser un delito (art. 191 §1a del Código Penal).",
-                  fr: "Signalez également à la Police et au Parquet — la coupure des services peut constituer une infraction pénale (art. 191 §1a du Code pénal).",
                 },
               },
             ],
