@@ -165,7 +165,10 @@ export function Wizard() {
       <header className="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
         <div className="mx-auto max-w-lg space-y-2">
           <div className="flex items-center justify-between">
-            <h1 className="text-sm font-semibold text-gray-900">Asystent Lokatorski</h1>
+            <div className="flex items-center gap-2">
+              <img src="/kopl-symbol.png" alt="KOPL" className="h-8 w-auto" />
+              <h1 className="text-sm font-semibold text-gray-900">Asystent Lokatorski</h1>
+            </div>
             {history.length > 1 && (
               <button
                 onClick={back}
@@ -186,7 +189,7 @@ export function Wizard() {
               className="h-1 w-full overflow-hidden rounded-full bg-gray-100"
             >
               <div
-                className="h-full rounded-full bg-gray-900 transition-all duration-300"
+                className="h-full rounded-full bg-[#d00000] transition-all duration-300"
                 style={{ width: `${(stepNum / STEP_COUNT) * 100}%` }}
               />
             </div>
