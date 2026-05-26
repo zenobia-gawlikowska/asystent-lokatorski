@@ -60,19 +60,21 @@ type Step =
 
 const t = (s: LocalizedString, lang: Lang) => s[lang];
 
-// Steps in subType paths go up to 4; standard paths up to 2
+// Standard path: 3 steps (caseType→stage→result). Extended (subType): 5 steps.
+// Result is included so the bar reaches 100% on completion.
 function stepCount(step: Step): number {
-  if (step.id === "subType" || step.id === "subStage") return 4;
-  if (step.id === "result" && step.subTypeId) return 4;
-  return 2;
+  if (step.id === "subType" || step.id === "subStage") return 5;
+  if (step.id === "result" && step.subTypeId) return 5;
+  return 3;
 }
 
-function stepNumber(step: Step): number | null {
+function stepNumber(step: Step): number {
   if (step.id === "caseType") return 1;
   if (step.id === "stage") return 2;
   if (step.id === "subType") return 3;
   if (step.id === "subStage") return 4;
-  return null;
+  // result: end of path — full bar
+  return step.subTypeId ? 5 : 3;
 }
 
 // ─── Sub-components ─────────────────────────────────────────────────────────
@@ -194,16 +196,16 @@ export function Wizard() {
         src="/header-right_bw.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none fixed right-0 bottom-0 z-0 w-64 max-w-[40vw] opacity-20 select-none"
+        className="pointer-events-none fixed right-0 bottom-0 -z-10 w-64 max-w-[40vw] opacity-20 select-none"
       />
 
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
+      <header className="border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
         <div className="mx-auto max-w-lg space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <img src="/kopl-symbol.png" alt="KOPL" className="h-8 w-auto" />
-              <h1 className="text-sm font-semibold text-gray-900">Asystent Lokatorski</h1>
+              <h1 className="text-base font-bold text-gray-900">Asystent Lokatorski</h1>
             </div>
             {history.length > 1 && (
               <button
@@ -215,26 +217,24 @@ export function Wizard() {
             )}
           </div>
           <LanguageSwitcher lang={lang} onChange={changeLang} />
-          {stepNum !== null && (
+          <div
+            role="progressbar"
+            aria-valuenow={stepNum}
+            aria-valuemin={1}
+            aria-valuemax={STEP_COUNT}
+            aria-label={t(UI.progressLabel, lang)}
+            className="h-1 w-full overflow-hidden rounded-full bg-gray-100"
+          >
             <div
-              role="progressbar"
-              aria-valuenow={stepNum}
-              aria-valuemin={1}
-              aria-valuemax={STEP_COUNT}
-              aria-label={t(UI.progressLabel, lang)}
-              className="h-1 w-full overflow-hidden rounded-full bg-gray-100"
-            >
-              <div
-                className="h-full rounded-full bg-[#d00000] transition-all duration-300"
-                style={{ width: `${(stepNum / STEP_COUNT) * 100}%` }}
-              />
-            </div>
-          )}
+              className="h-full rounded-full bg-[#d00000] transition-all duration-300"
+              style={{ width: `${(stepNum / STEP_COUNT) * 100}%` }}
+            />
+          </div>
         </div>
       </header>
 
       {/* Content */}
-      <main className="relative z-10 flex-1 px-4 py-6">
+      <main className="flex-1 px-4 py-6">
         <div className="mx-auto max-w-lg space-y-4">
           {/* Step 1 — Case type */}
           {step.id === "caseType" && city && (
