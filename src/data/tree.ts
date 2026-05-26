@@ -353,31 +353,6 @@ export const tree: DecisionTree = [
         },
         stages: [
           {
-            id: "zgloszono-brak-reakcji",
-            label: {
-              pl: "Zgłosiłem/am usterki, właściciel nie reaguje",
-              ua: "Повідомив/ла про несправності, власник не реагує",
-              ru: "Сообщил/а о неисправностях, владелец не реагирует",
-              en: "I reported defects, landlord is not responding",
-              es: "Informé de los defectos, el arrendador no responde",
-              fr: "J'ai signalé les défauts, le propriétaire ne répond pas",
-            },
-            documents: [
-              {
-                id: "wezwanie-do-naprawy",
-                name: {
-                  pl: "Wezwanie do wykonania napraw",
-                  ua: "Вимога про виконання ремонтних робіт",
-                  ru: "Требование о проведении ремонтных работ",
-                  en: "Demand to carry out repairs",
-                  es: "Requerimiento de ejecución de reparaciones",
-                  fr: "Mise en demeure d'effectuer des réparations",
-                },
-                filename: "/documents/warszawa/wezwanie-do-naprawy.pdf",
-              },
-            ],
-          },
-          {
             id: "obnizka-czynszu",
             label: {
               pl: "Chcę obniżyć czynsz z powodu złego stanu lokalu",
