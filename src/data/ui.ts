@@ -42,12 +42,12 @@ export const UI: Record<string, LocalizedString> = {
     fr: "Télécharger le document",
   },
   contactStaff: {
-    pl: "Porozmawiaj z pracownikiem KOPL",
-    ua: "Поговоріть з працівником KOPL",
-    ru: "Поговорите с сотрудником KOPL",
-    en: "Talk to a KOPL staff member",
-    es: "Hablar con un miembro del personal de KOPL",
-    fr: "Parler à un membre du personnel KOPL",
+    pl: "Porozmawiaj z KOPL",
+    ua: "Поговоріть з KOPL",
+    ru: "Поговорите с KOPL",
+    en: "Contact KOPL",
+    es: "Contactar con KOPL",
+    fr: "Contacter KOPL",
   },
   startOver: {
     pl: "Zacznij od nowa",

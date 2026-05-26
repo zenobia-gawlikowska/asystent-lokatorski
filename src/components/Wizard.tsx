@@ -6,7 +6,7 @@ import { LANG_LABELS, LANGS, type Lang, type LocalizedString } from "@/data/type
 import { cn } from "@/lib/utils";
 
 // KOPL contact page — update when the organization provides a direct link
-const KOPL_CONTACT_URL = "https://lokatorzy.info.pl";
+const KOPL_CONTACT_URL = "https://lokatorzy.info.pl/kontakt/";
 
 // BCP-47 lang codes for html[lang] — "ua" is our internal id, "uk" is the standard code for Ukrainian
 const LANG_TO_BCP47: Record<Lang, string> = {
