@@ -8,6 +8,9 @@ import { cn } from "@/lib/utils";
 // KOPL contact page — update when the organization provides a direct link
 const KOPL_CONTACT_URL = "https://lokatorzy.info.pl/kontakt/";
 
+// Single city — no city-selection step; hardcoded to the only available dataset
+const CITY_ID = "warszawa";
+
 // BCP-47 lang codes for html[lang] — "ua" is our internal id, "uk" is the standard code for Ukrainian
 const LANG_TO_BCP47: Record<Lang, string> = {
   pl: "pl",
@@ -21,30 +24,28 @@ const LANG_TO_BCP47: Record<Lang, string> = {
 // ─── Types ──────────────────────────────────────────────────────────────────
 
 type Step =
-  | { id: "city" }
-  | { id: "caseType"; cityId: string }
-  | { id: "stage"; cityId: string; caseTypeId: string }
-  | { id: "subType"; cityId: string; caseTypeId: string; stageId: string }
-  | { id: "subStage"; cityId: string; caseTypeId: string; stageId: string; subTypeId: string }
-  | { id: "result"; cityId: string; caseTypeId: string; stageId: string; subTypeId?: string; subStageId?: string };
+  | { id: "caseType" }
+  | { id: "stage"; caseTypeId: string }
+  | { id: "subType"; caseTypeId: string; stageId: string }
+  | { id: "subStage"; caseTypeId: string; stageId: string; subTypeId: string }
+  | { id: "result"; caseTypeId: string; stageId: string; subTypeId?: string; subStageId?: string };
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 const t = (s: LocalizedString, lang: Lang) => s[lang];
 
-// Steps in subType paths go up to 5; standard paths up to 3
+// Steps in subType paths go up to 4; standard paths up to 2
 function stepCount(step: Step): number {
-  if (step.id === "subType" || step.id === "subStage") return 5;
-  if (step.id === "result" && step.subTypeId) return 5;
-  return 3;
+  if (step.id === "subType" || step.id === "subStage") return 4;
+  if (step.id === "result" && step.subTypeId) return 4;
+  return 2;
 }
 
 function stepNumber(step: Step): number | null {
-  if (step.id === "city") return 1;
-  if (step.id === "caseType") return 2;
-  if (step.id === "stage") return 3;
-  if (step.id === "subType") return 4;
-  if (step.id === "subStage") return 5;
+  if (step.id === "caseType") return 1;
+  if (step.id === "stage") return 2;
+  if (step.id === "subType") return 3;
+  if (step.id === "subStage") return 4;
   return null;
 }
 
@@ -90,10 +91,13 @@ function Tile({ label, description, onClick }: { label: string; description?: st
 
 export function Wizard() {
   const [lang, setLang] = useState<Lang>("pl");
-  const [history, setHistory] = useState<Step[]>([{ id: "city" }]);
+  const [history, setHistory] = useState<Step[]>([{ id: "caseType" }]);
 
-  // history is always non-empty (initialized with city step, never cleared to [])
-  const step: Step = history[history.length - 1] ?? { id: "city" };
+  // history is always non-empty (initialized with caseType step, never cleared to [])
+  const step: Step = history[history.length - 1] ?? { id: "caseType" };
+
+  // City is fixed — no selection step
+  const city = tree.find((c) => c.id === CITY_ID);
 
   // Persist language selection — must use useEffect to avoid SSR/hydration mismatch
   useEffect(() => {
@@ -118,12 +122,10 @@ export function Wizard() {
     setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
   };
   const reset = () => {
-    setHistory([{ id: "city" }]);
+    setHistory([{ id: "caseType" }]);
   };
 
   // Derive current objects from tree
-  const city = step.id !== "city" ? tree.find((c) => c.id === step.cityId) : undefined;
-
   const caseType =
     (step.id === "stage" || step.id === "subType" || step.id === "subStage" || step.id === "result") && city
       ? city.caseTypes.find((ct) => ct.id === step.caseTypeId)
@@ -160,7 +162,15 @@ export function Wizard() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
+    <div className="relative flex min-h-screen flex-col bg-gray-50">
+      {/* Background building illustration — decorative, pointer-events disabled */}
+      <img
+        src="/header-right_bw.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none fixed right-0 bottom-0 z-0 w-64 max-w-[40vw] opacity-20 select-none"
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
         <div className="mx-auto max-w-lg space-y-2">
@@ -198,27 +208,9 @@ export function Wizard() {
       </header>
 
       {/* Content */}
-      <main className="flex-1 px-4 py-6">
+      <main className="relative z-10 flex-1 px-4 py-6">
         <div className="mx-auto max-w-lg space-y-4">
-          {/* Step 1 — City */}
-          {step.id === "city" && (
-            <>
-              <h2 className="text-xl font-bold text-gray-900">{t(UI.selectCity, lang)}</h2>
-              <div className="space-y-3">
-                {tree.map((c) => (
-                  <Tile
-                    key={c.id}
-                    label={c.name}
-                    onClick={() => {
-                      go({ id: "caseType", cityId: c.id });
-                    }}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Step 2 — Case type */}
+          {/* Step 1 — Case type */}
           {step.id === "caseType" && city && (
             <>
               <h2 className="text-xl font-bold text-gray-900">{t(UI.selectCaseType, lang)}</h2>
@@ -229,7 +221,7 @@ export function Wizard() {
                     label={t(ct.label, lang)}
                     description={t(ct.description, lang)}
                     onClick={() => {
-                      go({ id: "stage", cityId: step.cityId, caseTypeId: ct.id });
+                      go({ id: "stage", caseTypeId: ct.id });
                     }}
                   />
                 ))}
@@ -237,7 +229,7 @@ export function Wizard() {
             </>
           )}
 
-          {/* Step 3 — Stage */}
+          {/* Step 2 — Stage */}
           {step.id === "stage" && caseType && (
             <>
               <h2 className="text-xl font-bold text-gray-900">{t(UI.selectStage, lang)}</h2>
@@ -248,9 +240,9 @@ export function Wizard() {
                     label={t(s.label, lang)}
                     onClick={() => {
                       if (s.subTypes?.length) {
-                        go({ id: "subType", cityId: step.cityId, caseTypeId: step.caseTypeId, stageId: s.id });
+                        go({ id: "subType", caseTypeId: step.caseTypeId, stageId: s.id });
                       } else {
-                        go({ id: "result", cityId: step.cityId, caseTypeId: step.caseTypeId, stageId: s.id });
+                        go({ id: "result", caseTypeId: step.caseTypeId, stageId: s.id });
                       }
                     }}
                   />
@@ -259,7 +251,7 @@ export function Wizard() {
             </>
           )}
 
-          {/* Step 4 — Sub-type (within a stage that branches further) */}
+          {/* Step 3 — Sub-type (within a stage that branches further) */}
           {step.id === "subType" && stage && (
             <>
               <h2 className="text-xl font-bold text-gray-900">{t(UI.selectSubType, lang)}</h2>
@@ -272,7 +264,6 @@ export function Wizard() {
                     onClick={() => {
                       go({
                         id: "subStage",
-                        cityId: step.cityId,
                         caseTypeId: step.caseTypeId,
                         stageId: step.stageId,
                         subTypeId: st.id,
@@ -284,7 +275,7 @@ export function Wizard() {
             </>
           )}
 
-          {/* Step 5 — Sub-stage */}
+          {/* Step 4 — Sub-stage */}
           {step.id === "subStage" && subType && (
             <>
               <h2 className="text-xl font-bold text-gray-900">{t(UI.selectStage, lang)}</h2>
@@ -296,7 +287,6 @@ export function Wizard() {
                     onClick={() => {
                       go({
                         id: "result",
-                        cityId: step.cityId,
                         caseTypeId: step.caseTypeId,
                         stageId: step.stageId,
                         subTypeId: step.subTypeId,
