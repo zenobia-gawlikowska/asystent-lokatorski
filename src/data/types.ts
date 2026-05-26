@@ -66,3 +66,14 @@ export interface City {
 }
 
 export type DecisionTree = City[];
+
+// ─── Wizard navigation ───────────────────────────────────────────────────────
+
+// Each Step represents the current screen in the wizard.
+// The history stack (Step[]) is always non-empty; the last element is active.
+export type Step =
+  | { id: "caseType" }
+  | { id: "stage"; caseTypeId: string }
+  | { id: "subType"; caseTypeId: string; stageId: string }
+  | { id: "subStage"; caseTypeId: string; stageId: string; subTypeId: string }
+  | { id: "result"; caseTypeId: string; stageId: string; subTypeId?: string; subStageId?: string };

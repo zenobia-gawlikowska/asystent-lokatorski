@@ -3,7 +3,8 @@ import { FileText, Scale, ShieldAlert } from "lucide-react";
 
 import { UI } from "@/data/ui";
 import { tree } from "@/data/tree";
-import { LANG_LABELS, LANGS, type DocumentType, type Lang, type LocalizedString } from "@/data/types";
+import { LANG_LABELS, LANGS, type DocumentType, type Lang, type LocalizedString, type Step } from "@/data/types";
+import { appendStep, deriveWizardNodes, popStep, resetSteps, stepCount, stepNumber } from "@/lib/wizard-state";
 import { cn } from "@/lib/utils";
 
 // ─── Document-type badge ─────────────────────────────────────────────────────
@@ -47,35 +48,9 @@ const LANG_TO_BCP47: Record<Lang, string> = {
   fr: "fr",
 };
 
-// ─── Types ──────────────────────────────────────────────────────────────────
-
-type Step =
-  | { id: "caseType" }
-  | { id: "stage"; caseTypeId: string }
-  | { id: "subType"; caseTypeId: string; stageId: string }
-  | { id: "subStage"; caseTypeId: string; stageId: string; subTypeId: string }
-  | { id: "result"; caseTypeId: string; stageId: string; subTypeId?: string; subStageId?: string };
-
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 const t = (s: LocalizedString, lang: Lang) => s[lang];
-
-// Standard path: 3 steps (caseType→stage→result). Extended (subType): 5 steps.
-// Result is included so the bar reaches 100% on completion.
-function stepCount(step: Step): number {
-  if (step.id === "subType" || step.id === "subStage") return 5;
-  if (step.id === "result" && step.subTypeId) return 5;
-  return 3;
-}
-
-function stepNumber(step: Step): number {
-  if (step.id === "caseType") return 1;
-  if (step.id === "stage") return 2;
-  if (step.id === "subType") return 3;
-  if (step.id === "subStage") return 4;
-  // result: end of path — full bar
-  return step.subTypeId ? 5 : 3;
-}
 
 // ─── Sub-components ─────────────────────────────────────────────────────────
 
@@ -144,38 +119,17 @@ export function Wizard() {
   };
 
   const go = (next: Step) => {
-    setHistory((h) => [...h, next]);
+    setHistory((h) => appendStep(h, next));
   };
   const back = () => {
-    setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
+    setHistory(popStep);
   };
   const reset = () => {
-    setHistory([{ id: "caseType" }]);
+    setHistory(resetSteps());
   };
 
   // Derive current objects from tree
-  const caseType =
-    (step.id === "stage" || step.id === "subType" || step.id === "subStage" || step.id === "result") && city
-      ? city.caseTypes.find((ct) => ct.id === step.caseTypeId)
-      : undefined;
-
-  const stage =
-    (step.id === "subType" || step.id === "subStage" || step.id === "result") && caseType
-      ? caseType.stages.find((s) => s.id === step.stageId)
-      : undefined;
-
-  const subType =
-    (step.id === "subStage" || step.id === "result") && stage && step.subTypeId
-      ? stage.subTypes?.find((st) => st.id === step.subTypeId)
-      : undefined;
-
-  const subStage =
-    step.id === "result" && subType && step.subStageId
-      ? subType.stages.find((s) => s.id === step.subStageId)
-      : undefined;
-
-  // Documents come from the terminal stage (subStage if in subType path, otherwise stage)
-  const resultStage = step.id === "result" ? (subStage ?? stage) : undefined;
+  const { caseType, stage, subType, resultStage } = deriveWizardNodes(step, city);
 
   const stepNum = stepNumber(step);
   const STEP_COUNT = stepCount(step);

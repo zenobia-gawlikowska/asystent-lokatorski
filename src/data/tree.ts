@@ -153,7 +153,7 @@ export const tree: DecisionTree = [
                         },
                         description: {
                           pl: "Zawiadomienie skierowane do organów ścigania o przestępstwie nękania popełnionym przez właściciela poprzez odcięcie mediów. Bezprawne odcięcie energii elektrycznej, wody lub ogrzewania może wyczerpywać znamiona art. 190a kk.",
-                          ua: "Повідомлення, направлене правоохоронним органам про злочин переслідування, скоєний власником шляхом відключення комунальних послуг. Незаконне відключення електрики, води або опалення може кваліфікуватися як ст. 190a КК.",
+                          ua: "Повідомлення, скероване до правоохоронних органів про злочин переслідування, скоєний власником шляхом відключення комунальних послуг. Незаконне відключення електрики, води або опалення може кваліфікуватися як ст. 190a КК.",
                           ru: "Уведомление, направляемое правоохранительным органам о преступлении преследования, совершённом владельцем путём отключения коммунальных услуг. Незаконное отключение электричества, воды или отопления может квалифицироваться по ст. 190a УК.",
                           en: "A notice filed with law enforcement about the criminal harassment committed by the landlord through utility cutoff. Unlawfully cutting electricity, water or heating may constitute an offence under Art. 190a of the Penal Code.",
                           es: "Denuncia presentada ante las fuerzas del orden por el delito de acoso cometido por el arrendador mediante el corte de suministros. El corte ilegal de electricidad, agua o calefacción puede constituir un delito conforme al art. 190a del Código Penal.",
@@ -187,7 +187,7 @@ export const tree: DecisionTree = [
                         documentType: "court",
                         name: {
                           pl: "Wniosek o ochronę naruszonego posiadania",
-                          ua: "Заява про захист порушеного права власності",
+                          ua: "Заява про захист порушеного права посідача",
                           ru: "Заявление о защите нарушенного права владения",
                           en: "Application for protection of violated possession",
                           es: "Solicitud de protección de la posesión vulnerada",
@@ -195,7 +195,7 @@ export const tree: DecisionTree = [
                         },
                         description: {
                           pl: "Wniosek sądowy o ochronę naruszonego posiadania lokalu — skuteczny, gdy właściciel wchodzi do mieszkania bez zgody lub przejął klucze. Sąd może nakazać przywrócenie stanu sprzed naruszenia nawet bez badania tytułu prawnego.",
-                          ua: "Судова заява про захист порушеного права власності на житло — ефективна, коли власник входить до квартири без дозволу або заволодів ключами. Суд може наказати відновити стан, що існував до порушення, навіть без з'ясування правового титулу.",
+                          ua: "Судова заява про захист порушеного права на посідання житла — ефективна, коли власник входить до квартири без дозволу або заволодів ключами. Суд може наказати відновити стан, що існував до порушення, навіть без з'ясування правового титулу.",
                           ru: "Судебное заявление о защите нарушенного права владения жильём — применяется, когда владелец входит без согласия или завладел ключами. Суд может обязать восстановить положение до нарушения, не выясняя правового основания.",
                           en: "A court application for protection of violated possession — effective when the landlord enters without consent or has taken the keys. The court can order restoration of the pre-violation state without examining the legal title.",
                           es: "Solicitud judicial de protección de la posesión vulnerada — efectiva cuando el arrendador entra sin consentimiento o se ha quedado con las llaves. El juzgado puede ordenar la restitución del estado anterior a la vulneración sin examinar el título jurídico.",
@@ -204,7 +204,7 @@ export const tree: DecisionTree = [
                         filename: "/documents/warszawa/naruszenie-posiadania.pdf",
                         note: {
                           pl: "Złóż wniosek do sądu rejonowego w ciągu roku od naruszenia posiadania.",
-                          ua: "Подайте заяву до районного суду протягом одного року від порушення права власності.",
+                          ua: "Подайте заяву до районного суду протягом одного року від порушення права на посідання.",
                           ru: "Подайте заявление в районный суд в течение одного года с момента нарушения права владения.",
                           en: "File the application with the district court within one year of the violation.",
                           es: "Presente la solicitud ante el juzgado de primera instancia en el plazo de un año desde la vulneración.",
@@ -320,7 +320,7 @@ export const tree: DecisionTree = [
         },
         description: {
           pl: "Właściciel informuje mnie o podwyżce czynszu lub żąda wyższych opłat.",
-          ua: "Власник повідомляє мені про підвищення орендної плати або вимагає більших платежів.",
+          ua: "Власник повідомляє мене про підвищення орендної плати або вимагає більших платежів.",
           ru: "Владелец уведомляет меня о повышении арендной платы или требует более высоких платежей.",
           en: "My landlord is informing me of a rent increase or demanding higher payments.",
           es: "Mi arrendador me informa de un aumento del alquiler o exige pagos más altos.",
@@ -360,7 +360,7 @@ export const tree: DecisionTree = [
                 filename: "/documents/warszawa/pozew-ustalenie-niezasadnosci-podwyzki.pdf",
                 note: {
                   pl: "Masz 2 miesiące na złożenie sprzeciwu licząc od dnia doręczenia wypowiedzenia.",
-                  ua: "У вас є 2 місяці для подачі заперечення з дня вручення повідомлення.",
+                  ua: "У вас є 2 місяці для подання заперечення з дня вручення повідомлення.",
                   ru: "У вас есть 2 месяца для подачи возражения с момента вручения уведомления.",
                   en: "You have 2 months to file an objection from the date the notice was served.",
                   es: "Tiene 2 meses para presentar la oposición desde la fecha de notificación.",
@@ -478,7 +478,7 @@ export const tree: DecisionTree = [
                         },
                         description: {
                           pl: "Jednostronne oświadczenie najemcy o obniżeniu czynszu komunalnego z powodu wad lokalu uniemożliwiających korzystanie z niego. Czynsz zostaje automatycznie obniżony z dniem złożenia oświadczenia zarządcy.",
-                          ua: "Одностороння заява орендаря про зниження комунальної орендної плати через вади, що унеможливлюють користування житлом. Орендна плата знижується автоматично з дня подачі заяви керуючому.",
+                          ua: "Одностороння заява орендаря про зниження комунальної орендної плати через вади, що унеможливлюють користування житлом. Орендна плата знижується автоматично з дня подання заяви керуючому.",
                           ru: "Одностороннее заявление нанимателя о снижении муниципальной арендной платы из-за дефектов жилья, препятствующих его использованию. Аренда снижается автоматически с момента подачи заявления управляющему.",
                           en: "A unilateral statement by the tenant reducing the municipal rent due to defects that prevent proper use of the flat. The rent is automatically reduced from the date the statement is delivered to the manager.",
                           es: "Declaración unilateral del arrendatario de reducción del alquiler municipal por defectos que impiden el uso normal del piso. El alquiler se reduce automáticamente desde la fecha en que se entrega la declaración al administrador.",
@@ -521,7 +521,7 @@ export const tree: DecisionTree = [
                     id: "obnizka-prywatna",
                     label: {
                       pl: "Chcę wezwać właściciela do obniżenia czynszu",
-                      ua: "Хочу зобов'язати власника знизити орендну плату",
+                      ua: "Хочу вимагати від власника зниження орендної плати",
                       ru: "Хочу потребовать от владельца снижения арендной платы",
                       en: "I want to demand the landlord reduces the rent",
                       es: "Quiero exigir al propietario que reduzca el alquiler",
@@ -637,7 +637,7 @@ export const tree: DecisionTree = [
                 },
                 description: {
                   pl: "Zawiadomienie skierowane do organów ścigania o przestępstwie nękania popełnionym przez właściciela poprzez odcięcie mediów. Bezprawne odcięcie energii elektrycznej, wody lub ogrzewania może wyczerpywać znamiona art. 190a kk.",
-                  ua: "Повідомлення, направлене правоохоронним органам про злочин переслідування, скоєний власником шляхом відключення комунальних послуг. Незаконне відключення електрики, води або опалення може кваліфікуватися як ст. 190a КК.",
+                  ua: "Повідомлення, скероване до правоохоронних органів про злочин переслідування, скоєний власником шляхом відключення комунальних послуг. Незаконне відключення електрики, води або опалення може кваліфікуватися як ст. 190a КК.",
                   ru: "Уведомление, направляемое правоохранительным органам о преступлении преследования, совершённом владельцем путём отключения коммунальных услуг. Незаконное отключение электричества, воды или отопления может квалифицироваться по ст. 190a УК.",
                   en: "A notice filed with law enforcement about the criminal harassment committed by the landlord through utility cutoff. Unlawfully cutting electricity, water or heating may constitute an offence under Art. 190a of the Penal Code.",
                   es: "Denuncia presentada ante las fuerzas del orden por el delito de acoso cometido por el arrendador mediante el corte de suministros. El corte ilegal de electricidad, agua o calefacción puede constituir un delito conforme al art. 190a del Código Penal.",
@@ -671,7 +671,7 @@ export const tree: DecisionTree = [
                 documentType: "court",
                 name: {
                   pl: "Wniosek o ochronę naruszonego posiadania",
-                  ua: "Заява про захист порушеного права власності",
+                  ua: "Заява про захист порушеного права посідача",
                   ru: "Заявление о защите нарушенного права владения",
                   en: "Application for protection of violated possession",
                   es: "Solicitud de protección de la posesión vulnerada",
@@ -679,7 +679,7 @@ export const tree: DecisionTree = [
                 },
                 description: {
                   pl: "Wniosek sądowy o ochronę naruszonego posiadania lokalu — skuteczny, gdy właściciel wchodzi do mieszkania bez zgody lub przejął klucze. Sąd może nakazać przywrócenie stanu sprzed naruszenia nawet bez badania tytułu prawnego.",
-                  ua: "Судова заява про захист порушеного права власності на житло — ефективна, коли власник входить до квартири без дозволу або заволодів ключами. Суд може наказати відновити стан, що існував до порушення, навіть без з'ясування правового титулу.",
+                  ua: "Судова заява про захист порушеного права на посідання житла — ефективна, коли власник входить до квартири без дозволу або заволодів ключами. Суд може наказати відновити стан, що існував до порушення, навіть без з'ясування правового титулу.",
                   ru: "Судебное заявление о защите нарушенного права владения жильём — применяется, когда владелец входит без согласия или завладел ключами. Суд может обязать восстановить положение до нарушения, не выясняя правового основания.",
                   en: "A court application for protection of violated possession — effective when the landlord enters without consent or has taken the keys. The court can order restoration of the pre-violation state without examining the legal title.",
                   es: "Solicitud judicial de protección de la posesión vulnerada — efectiva cuando el arrendador entra sin consentimiento o se ha quedado con las llaves. El juzgado puede ordenar la restitución del estado anterior a la vulneración sin examinar el título jurídico.",
@@ -688,7 +688,7 @@ export const tree: DecisionTree = [
                 filename: "/documents/warszawa/naruszenie-posiadania.pdf",
                 note: {
                   pl: "Złóż wniosek do sądu rejonowego w ciągu roku od naruszenia posiadania.",
-                  ua: "Подайте заяву до районного суду протягом одного року від порушення права власності.",
+                  ua: "Подайте заяву до районного суду протягом одного року від порушення права на посідання.",
                   ru: "Подайте заявление в районный суд в течение одного года с момента нарушения права владения.",
                   en: "File the application with the district court within one year of the violation.",
                   es: "Presente la solicitud ante el juzgado de primera instancia en el plazo de un año desde la vulneración.",
