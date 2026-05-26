@@ -190,18 +190,17 @@ export function Wizard() {
   }, []);
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-gray-50">
-      {/* Background building illustration — decorative, pointer-events disabled */}
-      <img
-        src="/header-right_bw.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none fixed right-0 bottom-0 -z-10 w-64 max-w-[40vw] opacity-20 select-none"
-      />
-
+    <div className="flex min-h-screen flex-col bg-gray-50">
       {/* Header */}
-      <header className="border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
-        <div className="mx-auto max-w-lg space-y-2">
+      <header className="relative overflow-hidden border-b border-gray-100 bg-white px-4 py-3 shadow-sm">
+        {/* Building illustration — decorative, clipped to header */}
+        <img
+          src="/header-right_bw.png"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 right-0 h-full w-auto opacity-20 select-none"
+        />
+        <div className="relative mx-auto max-w-lg space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <img src="/kopl-symbol.png" alt="KOPL" className="h-8 w-auto" />
