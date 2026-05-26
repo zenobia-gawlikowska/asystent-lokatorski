@@ -317,6 +317,9 @@ export function Wizard() {
                 {(resultStage.documents ?? []).map((doc) => (
                   <div key={doc.id} className="space-y-3 rounded-xl border border-gray-200 bg-white p-5">
                     <p className="font-semibold text-gray-900">{t(doc.name, lang)}</p>
+                    {doc.description && (
+                      <p className="text-sm leading-relaxed text-gray-600">{t(doc.description, lang)}</p>
+                    )}
                     {doc.note && (
                       <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
                         <p className="mb-1 text-xs font-semibold tracking-wide text-amber-800 uppercase">

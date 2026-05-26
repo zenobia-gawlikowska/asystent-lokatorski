@@ -21,6 +21,8 @@ export interface Document {
   name: LocalizedString;
   // Path under /public/documents/, always a Polish-language file
   filename: string;
+  // Short description of what the document does and when to use it
+  description?: LocalizedString;
   // Optional guidance on when / how to use this document
   note?: LocalizedString;
 }
