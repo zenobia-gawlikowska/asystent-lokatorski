@@ -209,7 +209,7 @@ export function Wizard() {
             {history.length > 1 && (
               <button
                 onClick={back}
-                className="-my-2 inline-flex min-h-[44px] items-center rounded-md px-2 py-2 text-sm text-gray-500 transition-colors hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
+                className="-my-1 inline-flex min-h-[44px] items-center rounded-full bg-white/90 px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 ← {t(UI.back, lang)}
               </button>
