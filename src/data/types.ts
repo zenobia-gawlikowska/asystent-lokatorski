@@ -25,10 +25,19 @@ export interface Document {
   note?: LocalizedString;
 }
 
+export interface SubType {
+  id: string;
+  label: LocalizedString;
+  description?: LocalizedString;
+  stages: Stage[];
+}
+
 export interface Stage {
   id: string;
   label: LocalizedString;
-  documents: Document[];
+  // Either documents (terminal) or subTypes (one more level of navigation)
+  documents?: Document[];
+  subTypes?: SubType[];
 }
 
 export interface CaseType {

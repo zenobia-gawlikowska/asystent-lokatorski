@@ -73,6 +73,14 @@ export const UI: Record<string, LocalizedString> = {
     es: "Nota",
     fr: "Note",
   },
+  selectSubType: {
+    pl: "Określ rodzaj sytuacji",
+    ua: "Уточніть тип ситуації",
+    ru: "Уточните вид ситуации",
+    en: "Specify the type of situation",
+    es: "Especifique el tipo de situación",
+    fr: "Précisez le type de situation",
+  },
   progressLabel: {
     pl: "Postęp",
     ua: "Прогрес",

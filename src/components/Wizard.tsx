@@ -8,8 +8,6 @@ import { cn } from "@/lib/utils";
 // KOPL contact page — update when the organization provides a direct link
 const KOPL_CONTACT_URL = "https://lokatorzy.info.pl";
 
-const STEP_COUNT = 3;
-
 // BCP-47 lang codes for html[lang] — "ua" is our internal id, "uk" is the standard code for Ukrainian
 const LANG_TO_BCP47: Record<Lang, string> = {
   pl: "pl",
@@ -26,16 +24,27 @@ type Step =
   | { id: "city" }
   | { id: "caseType"; cityId: string }
   | { id: "stage"; cityId: string; caseTypeId: string }
-  | { id: "result"; cityId: string; caseTypeId: string; stageId: string };
+  | { id: "subType"; cityId: string; caseTypeId: string; stageId: string }
+  | { id: "subStage"; cityId: string; caseTypeId: string; stageId: string; subTypeId: string }
+  | { id: "result"; cityId: string; caseTypeId: string; stageId: string; subTypeId?: string; subStageId?: string };
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 const t = (s: LocalizedString, lang: Lang) => s[lang];
 
+// Steps in subType paths go up to 5; standard paths up to 3
+function stepCount(step: Step): number {
+  if (step.id === "subType" || step.id === "subStage") return 5;
+  if (step.id === "result" && step.subTypeId) return 5;
+  return 3;
+}
+
 function stepNumber(step: Step): number | null {
   if (step.id === "city") return 1;
   if (step.id === "caseType") return 2;
   if (step.id === "stage") return 3;
+  if (step.id === "subType") return 4;
+  if (step.id === "subStage") return 5;
   return null;
 }
 
@@ -116,13 +125,30 @@ export function Wizard() {
   const city = step.id !== "city" ? tree.find((c) => c.id === step.cityId) : undefined;
 
   const caseType =
-    (step.id === "stage" || step.id === "result") && city
+    (step.id === "stage" || step.id === "subType" || step.id === "subStage" || step.id === "result") && city
       ? city.caseTypes.find((ct) => ct.id === step.caseTypeId)
       : undefined;
 
-  const stage = step.id === "result" && caseType ? caseType.stages.find((s) => s.id === step.stageId) : undefined;
+  const stage =
+    (step.id === "subType" || step.id === "subStage" || step.id === "result") && caseType
+      ? caseType.stages.find((s) => s.id === step.stageId)
+      : undefined;
+
+  const subType =
+    (step.id === "subStage" || step.id === "result") && stage && step.subTypeId
+      ? stage.subTypes?.find((st) => st.id === step.subTypeId)
+      : undefined;
+
+  const subStage =
+    step.id === "result" && subType && step.subStageId
+      ? subType.stages.find((s) => s.id === step.subStageId)
+      : undefined;
+
+  // Documents come from the terminal stage (subStage if in subType path, otherwise stage)
+  const resultStage = step.id === "result" ? (subStage ?? stage) : undefined;
 
   const stepNum = stepNumber(step);
+  const STEP_COUNT = stepCount(step);
 
   // Dev-only a11y checker — tree-shaken by Vite in production builds
   useEffect(() => {
@@ -218,11 +244,60 @@ export function Wizard() {
                     key={s.id}
                     label={t(s.label, lang)}
                     onClick={() => {
+                      if (s.subTypes?.length) {
+                        go({ id: "subType", cityId: step.cityId, caseTypeId: step.caseTypeId, stageId: s.id });
+                      } else {
+                        go({ id: "result", cityId: step.cityId, caseTypeId: step.caseTypeId, stageId: s.id });
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Step 4 — Sub-type (within a stage that branches further) */}
+          {step.id === "subType" && stage && (
+            <>
+              <h2 className="text-xl font-bold text-gray-900">{t(UI.selectSubType, lang)}</h2>
+              <div className="space-y-3">
+                {stage.subTypes?.map((st) => (
+                  <Tile
+                    key={st.id}
+                    label={t(st.label, lang)}
+                    description={st.description ? t(st.description, lang) : undefined}
+                    onClick={() => {
+                      go({
+                        id: "subStage",
+                        cityId: step.cityId,
+                        caseTypeId: step.caseTypeId,
+                        stageId: step.stageId,
+                        subTypeId: st.id,
+                      });
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Step 5 — Sub-stage */}
+          {step.id === "subStage" && subType && (
+            <>
+              <h2 className="text-xl font-bold text-gray-900">{t(UI.selectStage, lang)}</h2>
+              <div className="space-y-3">
+                {subType.stages.map((s) => (
+                  <Tile
+                    key={s.id}
+                    label={t(s.label, lang)}
+                    onClick={() => {
                       go({
                         id: "result",
                         cityId: step.cityId,
                         caseTypeId: step.caseTypeId,
-                        stageId: s.id,
+                        stageId: step.stageId,
+                        subTypeId: step.subTypeId,
+                        subStageId: s.id,
                       });
                     }}
                   />
@@ -232,11 +307,11 @@ export function Wizard() {
           )}
 
           {/* Result */}
-          {step.id === "result" && stage && (
+          {step.id === "result" && resultStage && (
             <>
               <h2 className="text-xl font-bold text-gray-900">{t(UI.yourDocument, lang)}</h2>
               <div className="space-y-4">
-                {stage.documents.map((doc) => (
+                {(resultStage.documents ?? []).map((doc) => (
                   <div key={doc.id} className="space-y-3 rounded-xl border border-gray-200 bg-white p-5">
                     <p className="font-semibold text-gray-900">{t(doc.name, lang)}</p>
                     {doc.note && (
