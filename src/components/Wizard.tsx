@@ -201,19 +201,9 @@ export function Wizard() {
           className="pointer-events-none absolute top-0 right-0 h-full w-auto opacity-20 select-none"
         />
         <div className="relative mx-auto max-w-lg space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <img src="/kopl-symbol.png" alt="KOPL" className="h-8 w-auto" />
-              <h1 className="text-base font-bold text-gray-900">Asystent Lokatorski</h1>
-            </div>
-            {history.length > 1 && (
-              <button
-                onClick={back}
-                className="-my-1 inline-flex min-h-[44px] items-center rounded-full bg-white/90 px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
-              >
-                ← {t(UI.back, lang)}
-              </button>
-            )}
+          <div className="flex items-center gap-3">
+            <img src="/kopl-symbol.png" alt="KOPL" className="h-10 w-auto" />
+            <h1 className="text-2xl font-bold text-gray-900">Asystent Lokatorski</h1>
           </div>
           <LanguageSwitcher lang={lang} onChange={changeLang} />
           <div
@@ -235,6 +225,14 @@ export function Wizard() {
       {/* Content */}
       <main className="flex-1 px-4 py-6">
         <div className="mx-auto max-w-lg space-y-4">
+          {history.length > 1 && (
+            <button
+              onClick={back}
+              className="inline-flex min-h-[44px] items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
+            >
+              ← {t(UI.back, lang)}
+            </button>
+          )}
           {/* Step 1 — Case type */}
           {step.id === "caseType" && city && (
             <>
