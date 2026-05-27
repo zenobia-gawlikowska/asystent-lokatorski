@@ -226,12 +226,14 @@ export function Wizard() {
       <main className="flex-1 px-4 py-6">
         <div className="mx-auto max-w-lg space-y-4">
           {history.length > 1 && (
-            <button
-              onClick={back}
-              className="inline-flex min-h-[44px] items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
-            >
-              ← {t(UI.back, lang)}
-            </button>
+            <div className="flex justify-end">
+              <button
+                onClick={back}
+                className="inline-flex min-h-[44px] items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 focus-visible:ring-4 focus-visible:ring-gray-900 focus-visible:ring-offset-2 focus-visible:outline-none"
+              >
+                ← {t(UI.back, lang)}
+              </button>
+            </div>
           )}
           {/* Step 1 — Case type */}
           {step.id === "caseType" && city && (
